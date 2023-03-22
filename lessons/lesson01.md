@@ -14,7 +14,7 @@ modules: styles.css, index.ts, app.tsx, head.tsx, and login-form.tsx.
 At the end of the lesson, our source & cypress folders should look something
 like this:
 
-```
+```bash
 lesson-1
 ├── cypress
   ├── e2e
@@ -32,7 +32,6 @@ lesson-1
   ├── styles.css
   ├── tsconfig.json
   └── vite-env.d.ts
-
 ```
 
 Remove the files `logo.svg` , `favicon.svg`, `index.css`, `App.test.tsx` from
@@ -51,92 +50,92 @@ created, clone it to your machine and install.
 In our index.html, let’s move everything inside the <style> tag in the
 `styles.css` file:
 
-```
+```css
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #f3f6f9;
-    font-family: "Nunito Sans", sans-serif;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #f3f6f9;
+  font-family: 'Nunito Sans', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form {
-    background-color: #fff;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding: 40px;
-    width: 440px;
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 40px;
+  width: 440px;
 }
 
 .logo {
-    text-align: center;
+  text-align: center;
 }
 
 .form-group {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .form-label {
-    display: block;
-    color: #090637;
-    font-size: 14px;
-    font-weight: 600;
-    padding-bottom: 6px;
-    width: 100%;
+  display: block;
+  color: #090637;
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 6px;
+  width: 100%;
 }
 
 .form-input {
-    border: 1px solid #515963;
-    border-radius: 4px;
-    font-family: "Nunito Sans", sans-serif;
-    line-height: 38px;
-    padding: 0 8px;
-    flex: 1 0;
+  border: 1px solid #515963;
+  border-radius: 4px;
+  font-family: 'Nunito Sans', sans-serif;
+  line-height: 38px;
+  padding: 0 8px;
+  flex: 1 0;
 }
 
 .form-input:focus {
-    box-shadow: #27aee4 0px 0px 0px 1px inset;
-    border: 1px solid #27aee4;
-    outline: none;
+  box-shadow: #27aee4 0px 0px 0px 1px inset;
+  border: 1px solid #27aee4;
+  outline: none;
 }
 
 .form-input + .button {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 .button {
-    border: none;
-    background-color: #03c;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    font-weight: 600;
-    line-height: 40px;
-    padding: 0 8px;
+  border: none;
+  background-color: #03c;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 40px;
+  padding: 0 8px;
 }
 
 .button:hover {
-    background-color: #101f7c;
+  background-color: #101f7c;
 }
 
 .footer {
-    margin-top: 16px;
-    text-align: center;
+  margin-top: 16px;
+  text-align: center;
 }
 
-.footer>a {
-    text-decoration: inherit;
-    color: #03c;
+.footer > a {
+  text-decoration: inherit;
+  color: #03c;
 }
 ```
 
