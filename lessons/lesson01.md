@@ -542,7 +542,16 @@ yarn cy:run-ct-fast
 yarn cy:run-e2e  
 ```
 
+We will consider adding unit tests with Jest if we need them later. For now, since we deleted the `App.test.tsx` file, we do not have any tests in Jest, therefore we will need to replace our scripts at `package.json` file.
 
+```json
+"test": "echo add unit tests if needed",
+"test:coverage": "echo add unit tests if needed",
+```
+
+
+
+Push the PR, and wait 3 minutes 
 
 ## Summary
 
