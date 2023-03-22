@@ -1,7 +1,9 @@
+import logo from '../assets/logo.svg'
+
 export default function LoginForm() {
   return (
     <form data-cy="LoginForm" className="login-form">
-      <img src="public/extend-logo.png" alt="Extend" />
+      <img src={logo} alt="Extend" />
 
       <div className="form-group">
         <label className="form-label" htmlFor="email">
