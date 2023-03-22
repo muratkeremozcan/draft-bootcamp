@@ -35,7 +35,7 @@ lesson-1
 
 ```
 
-Remove the files `logo.svg` , `favicon.svg`, `index.css`, `App.test.tsx`  from `./src/` . Delete `spec.cy.ts` from `./cypress/e2e/`.
+Remove the files `logo.svg` , `favicon.svg`, `index.css`, `App.test.tsx`  from `./src/` . Delete `spec.cy.ts` from `./cypress/e2e/`. Delete the folder `./public/` at root.
 
 We will use a template repo with React, TS, Cypress (e2e & ct), GHA with CI
 architecture, Jest, ESLint, Prettier, Renovate, Husky, Lint-staged, and most of
@@ -549,7 +549,25 @@ We will consider adding unit tests with Jest if we need them later. For now, sin
 "test:coverage": "echo add unit tests if needed",
 ```
 
+Vite uses port 5173 by default. We can change that to the familiar 3000.
 
+At root `./vite.config.ts` add a line for the port:
+
+```tsx
+// ./vite.config.ts
+import {defineConfig} from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  server: {port: 3000},
+  plugins: [react()],
+})
+```
+
+Replace the occurances of 5173 with 3000.
+
+![port 3000](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nyizeihe27j8wvnm3nkf.png)
 
 Push the PR, and wait 3 minutes 
 
