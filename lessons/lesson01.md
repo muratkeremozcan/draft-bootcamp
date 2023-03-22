@@ -1,5 +1,7 @@
 ## Overview
 
+TODO: find and add the Extend logo to `public/extend-logo.png`. Update the screenshots.
+
 In this assignment, we will be re-writing a portion of the work that we did in
 assignment 0 into React; we will be moving the entirety of what lives in the
 single HTML file into their own respective files, and will be writing our first
