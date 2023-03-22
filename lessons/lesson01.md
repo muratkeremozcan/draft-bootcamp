@@ -200,8 +200,6 @@ export default function LoginForm() {
 }
 ```
 
-TODO: find and add the Extend logo to `public/extend-logo.png`
-
 Let us quickly write a Cypress component test and ensure our component renders
 properly.
 
