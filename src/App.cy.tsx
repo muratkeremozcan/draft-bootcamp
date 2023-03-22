@@ -1,9 +1,10 @@
 import App from './App'
-import './index.css'
 
-describe('CT sanity', () => {
-  it('passes sanity', () => {
+describe('App', () => {
+  it('renders children', () => {
     cy.mount(<App />)
-    cy.getByCy('count').contains('count is 0').dblclick().contains('count is 2')
+
+    cy.getByCy('LoginForm').should('be.visible')
+    cy.getByCy('Footer').should('be.visible')
   })
 })
