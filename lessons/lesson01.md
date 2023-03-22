@@ -52,97 +52,97 @@ In our index.html, let’s move everything inside the <style> tag in the
 
 ```css
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: #f3f6f9;
-  font-family: 'Nunito Sans', sans-serif;
-  height: 100vh;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: #f3f6f9;
+    font-family: "Nunito Sans", sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-form {
-  background-color: #fff;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 40px;
-  width: 440px;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 40px;
+    width: 440px;
 }
 
 .logo {
-  text-align: center;
+    text-align: center;
 }
 
 .form-group {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
 }
 
 .form-label {
-  display: block;
-  color: #090637;
-  font-size: 14px;
-  font-weight: 600;
-  padding-bottom: 6px;
-  width: 100%;
+    display: block;
+    color: #090637;
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 6px;
+    width: 100%;
 }
 
 .form-input {
-  border: 1px solid #515963;
-  border-radius: 4px;
-  font-family: 'Nunito Sans', sans-serif;
-  line-height: 38px;
-  padding: 0 8px;
-  flex: 1 0;
+    border: 1px solid #515963;
+    border-radius: 4px;
+    font-family: "Nunito Sans", sans-serif;
+    line-height: 38px;
+    padding: 0 8px;
+    flex: 1 0;
 }
 
 .form-input:focus {
-  box-shadow: #27aee4 0px 0px 0px 1px inset;
-  border: 1px solid #27aee4;
-  outline: none;
+    box-shadow: #27aee4 0px 0px 0px 1px inset;
+    border: 1px solid #27aee4;
+    outline: none;
 }
 
 .form-input + .button {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .button {
-  border: none;
-  background-color: #03c;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  line-height: 40px;
-  padding: 0 8px;
+    border: none;
+    background-color: #03c;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 40px;
+    padding: 0 8px;
 }
 
 .button:hover {
-  background-color: #101f7c;
+    background-color: #101f7c;
 }
 
 .footer {
-  margin-top: 16px;
-  text-align: center;
+    margin-top: 16px;
+    text-align: center;
 }
 
-.footer > a {
-  text-decoration: inherit;
-  color: #03c;
+.footer>a {
+    text-decoration: inherit;
+    color: #03c;
 }
 ```
 
 ### Move the HTML Elements into JSX
 
 Let’s create our first react component! Move what’s inside that form tag to
-LoginForm.tsx:
+`LoginForm.tsx`.
 
 While doing so, make sure to refactor some of the attributes and single HTML
 tags to turn our HTML into valid JSX:
@@ -157,8 +157,7 @@ For a full list of attribute/labelling differences between HTML and React, check
 out https://reactjs.org/docs/dom-elements.html#differences-in-attributes, or use
 the linter as a guide on which properties would need to be re-labeled.
 
-Create a folder and file `components/LoginForm.tsx`. Paste the After applying
-all the updates, we should end up with something like this:
+Create a folder and file `components/LoginForm.tsx`. Create a function `LoginForm` that returns the html in the previous lesson. After applying all the updates, we should end up with something like this:
 
 ```tsx
 // src/components/LoginForm.tsx
@@ -201,14 +200,11 @@ export default function LoginForm() {
 
 TODO: find and add the Extend logo to `public/extend-logo.png`
 
-TODO: identify the files at the end of the lesson, and remove them , ex:
-`src/App.cy.tsx`
-
 Let us quickly write a Cypress component test and ensure our component renders
 properly.
 
 First, we will perform a one time import of our styles to
-`cypress/support/component.tsx` changing the file extension to `tsx`.
+`cypress/support/component.tsx` .
 
 ```tsx
 // ./cypress/support/component.tsx
@@ -373,6 +369,7 @@ In `src/App.tsx`, import both the components that we created in the previous
 section, and let’s add a footer below the LoginForm:
 
 ```tsx
+// ./src/App.tsx
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import './styles.css'
@@ -408,10 +405,10 @@ describe('App', () => {
 
 ![App.cy.tsx](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3s8cer0umyfkgwlywmzc.png)
 
-We see that both the children render, but what is a good way to verify that. One
+We see that both the children render, but what is a good way to verify that? One
 best practice is to add a `data-cy` attribute to the top element of the
 component with the component name. We can then use the custom selector `getByCy`
-in the `cypress/support/commands.ts` file to ensure the component is rendered.
+in the `cypress/support/commands.ts` file to ensure the child component is rendered.
 
 ```tsx
 // ./src/App.cy.tsx
@@ -480,7 +477,7 @@ export default function LoginForm() {
 }
 ```
 
-**Why Fragments, and not <div> ?**
+**Why Fragments, and not `<div>` ?**
 
 At scale, we want to reduce nesting of our React app to improve readability when
 inspecting or debugging our work. Adding an unnecessary <div> or <span> element
@@ -528,7 +525,7 @@ describe('e2e sanity', () => {
 })
 ```
 
-![e2e sanity](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8wwwfvk809apb2unljnh.png)
+![e2e sanity](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/babplab2vw0b2anob9sb.png)
 
 For this time, in order to demo our local utilities, we can quickly perform the
 CI checks locally prior to pushing.
@@ -553,12 +550,14 @@ therefore we will need to replace our scripts at `package.json` file.
 "test:coverage": "echo add unit tests if needed",
 ```
 
-Push the PR, and wait 3 minutes
+Push the PR, and wait about 2 - 3 minutes. A fully green CI indicates a passing lesson.
+
+![Actions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/f2iyseftmmdz6s611xzt.png)
 
 ## Summary
 
 Congratulations! We’ve now written our very first components in React, Cypress
-component tests for each, and an e2e test. For the next assignment, we’ll be
+component tests for each, and an e2e test. For the next assignment, we will be
 covering common techniques and patterns that we’ll encounter in production code.
 
 Your takeaways from this assignment should be:
@@ -566,6 +565,7 @@ Your takeaways from this assignment should be:
 - Building HTML into valid React-JSX syntax
 - Exporting and importing React components
 - Embedding a React single-page application (SPA) into our HTML
+- TDD with Cypress component testing.
 
 Now that you’ve completed the theory and assignment, let’s move on to
 [Lesson 2: Components & Composition.]()
