@@ -1,58 +1,39 @@
+ 
+
 ## Overview
 
-TODO: find and add the Extend logo to `public/extend-logo.png`. Update the screenshots.
-
-In this assignment, we will be re-writing a portion of the work that we did in
-assignment 0 into React; we will be moving the entirety of what lives in the
-single HTML file into their own respective files, and will be writing our first
-React component! Stay tuned to adding event listeners, component lifecycles, and
-state management in the upcoming assignments.
+In this assignment, we will be re-writing a portion of the work that we did in assignment 0 into React; we will be moving the entirety of what lives in the single HTML file into their own respective files, and will be writing our first React component! Stay tuned to adding event listeners, component lifecycles, and state management in the upcoming assignments.
 
 ## Re-organize our code into modules
 
-First, let’s break down the single HTML file in the lesson’s base into several
-modules: styles.css, index.ts, app.tsx, head.tsx, and login-form.tsx.
+First, let’s break down the single HTML file in the lesson’s base into several modules: styles.css, App.tsx, main.tsx, Footer.tsx, and LoginForm.tsx.
 
-At the end of the lesson, our source & cypress folders should look something
-like this:
+At the end of the lesson, our source & cypress folders should look something like this:
 
-```bash
-lesson-1
+```
+|- index.html
 ├── cypress
   ├── e2e
-    ├── sanity-spec.ts
+    ├── sanity.cy.ts
 ├── src
-  ├── App.css
   ├── App.cy.tsx
   ├── App.tsx
   ├── components
-  │   ├── Footer.cy.tsx
-  │   ├── Footer.tsx
-  │   ├── LoginForm.cy.tsx
-  │   └── LoginForm.tsx
+  │   ├── Footer.cy.tsx
+  │   ├── Footer.tsx
+  │   ├── LoginForm.cy.tsx
+  │   └── LoginForm.tsx
   ├── main.tsx
   ├── styles.css
   ├── tsconfig.json
   └── vite-env.d.ts
 ```
 
-Remove the files `logo.svg` , `favicon.svg`, `index.css`, `App.test.tsx` from
-`./src/` . Delete `spec.cy.ts` from `./cypress/e2e/`. Delete the folder
-`./public/` at root.
-
-We will use a template repo with React, TS, Cypress (e2e & ct), GHA with CI
-architecture, Jest, ESLint, Prettier, Renovate, Husky, Lint-staged, and most of
-the things you need to get started with a new project. Go to
-https://github.com/muratkeremozcan/react-cypress-ts-vite-template, click
-`Use this template` and `Create a new repository`. Once your repository is
-created, clone it to your machine and install.
-
 ### Move the stylesheet rules into the CSS files
 
-In our index.html, let’s move everything inside the <style> tag in the
-`styles.css` file:
+In our index.html, let’s move everything from inside the <style> tag to the styles.css file:
 
-```css
+```
 * {
     box-sizing: border-box;
 }
@@ -129,46 +110,31 @@ body {
 .button:hover {
     background-color: #101f7c;
 }
-
-.footer {
-    margin-top: 16px;
-    text-align: center;
-}
-
-.footer>a {
-    text-decoration: inherit;
-    color: #03c;
-}
 ```
 
 ### Move the HTML Elements into JSX
 
-Let’s create our first react component! Move what’s inside that form tag to
-`LoginForm.tsx`.
+Let’s create our first React component! Move what’s inside that form tag to LoginForm.tsx:
 
-While doing so, make sure to refactor some of the attributes and single HTML
-tags to turn our HTML into valid JSX:
+While doing so, make sure to refactor some of the attributes and single HTML tags to turn our HTML into valid JSX:
 
-- Adding self-enclosing tags for our <input />: all defined tags must be closed,
-  either with the self-closing format or with a corresponding closing tag
+- Adding self-enclosing tags for our <input />: all defined tags must be closed, either with the self-closing format or with a corresponding closing tag 
 
 - Moving class to className:
 - relabelling for to htmlFor:
 
-For a full list of attribute/labelling differences between HTML and React, check
-out https://reactjs.org/docs/dom-elements.html#differences-in-attributes, or use
-the linter as a guide on which properties would need to be re-labeled.
+For a full list of attribute/labelling differences between HTML and React, check out https://reactjs.org/docs/dom-elements.html#differences-in-attributes, or use the linter as a guide on which properties would need to be re-labeled.  
 
-Create a folder and file `components/LoginForm.tsx`. Create a function `LoginForm` that returns the html in the previous lesson. After applying all the updates, we should end up with something like this:
+After applying all the updates, we should end up with something like this:
 
-```tsx
-// src/components/LoginForm.tsx
-import React from 'react'
+```
+// ./src/components/LoginForm.tsx
+import logo from '../assets/logo.svg'
 
 export default function LoginForm() {
   return (
     <form className="login-form">
-      <img src="public/extend-logo.png" alt="Extend" />
+      <img src={logo} alt="Extend" />
 
       <div className="form-group">
         <label className="form-label" htmlFor="email">
@@ -198,139 +164,16 @@ export default function LoginForm() {
     </form>
   )
 }
-```
-
-Let us quickly write a Cypress component test and ensure our component renders
-properly.
-
-First, we will perform a one time import of our styles to
-`cypress/support/component.tsx` .
-
-```tsx
-// ./cypress/support/component.tsx
-
-// put CT-only commands here
-import './commands'
-import '../../src/styles.css' // add this line
-
-import {mount} from 'cypress/react18'
-
-Cypress.Commands.add('mount', mount)
-```
-
-Since we copy pasted the html into our component, we will not perform TDD this
-time, instead we will write some tests the traditional way. Let us start by
-mounting the component and seeing it render.
-
-```tsx
-// ./src/components/LoginForm.cy.tsx
-import LoginForm from './LoginForm'
-
-describe('LoginForm', () => {
-  it('should render the elements', () => {
-    cy.mount(<LoginForm />)
-  })
-})
-```
-
-`yarn cy:open-ct` to start the component runner and execute the `LoginForm`
-test. We see the component render in isolation, we can even ad-hoc test it.
-
-![LoginForm-initial-mount](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3rupu0lsg6skaf3u151p.png)
-
-For now the component does not do much, so we can verify that the elements
-render.
-
-```tsx
-// ./src/components/LoginForm.cy.tsx
-import LoginForm from './LoginForm'
-
-describe('LoginForm', () => {
-  it('should render the elements', () => {
-    cy.mount(<LoginForm />)
-
-    cy.get('#email').type('a')
-    cy.get('#password').type('b')
-
-    cy.get('#passwordToggle').should('be.visible')
-    cy.get('[type="submit"]').should('be.visible')
-    cy.get('img').should('be.visible')
-  })
-})
-```
-
-In addition to the login form, let’s add a footer component in our components
-folder. Start with a failing test that only mounts the component:
-
-```tsx
-// src/components/Footer.cy.tsx
-import Footer from './Footer'
-
-describe('Footer', () => {
-  it('should render', () => {
-    cy.mount(<Footer />)
-  })
-})
-```
-
-In order to pass the test, let's create a basic component:
-
-```tsx
-// src/components/Footer.tsx
-export default function Footer() {
-  return <div>footer</div>
+   </form>
+  )
 }
 ```
 
-We want our footer to be a wrapping div with a class `footer`, text
-`Don't have an account yet?&nbsp;`, a link to `https://www.extend.com/contact`
-with text `Contact us`.
 
-We can begin to write incremental, simple steps to satisfy the requirement.
-
-```tsx
-// src/components/Footer.cy.tsx
-import Footer from './Footer'
-
-describe('Footer', () => {
-  it('should render', () => {
-    cy.mount(<Footer />)
-
-    cy.get('.footer')
-      .contains("Don't have an account yet?")
-})
+In addition to the login form, let’s add a footer component in our components folder:
 
 ```
-
-```tsx
-// src/components/Footer.tsx
-export default function Footer() {
-  return <div className="footer">Don't have an account yet?&nbsp;</div>
-}
-```
-
-Under the `div` we want a link to `https://www.extend.com/contact` with text
-`Contact us`.
-
-```tsx
-// src/components/Footer.cy.tsx
-import Footer from './Footer'
-
-describe('Footer', () => {
-  it('should render', () => {
-    cy.mount(<Footer />)
-
-    cy.get('.footer')
-      .contains("Don't have an account yet?")
-      .find('a')
-      .should('have.attr', 'href', 'https://www.extend.com/contact')
-      .contains('Contact us')
-  })
-})
-```
-
-```tsx
-// src/components/Footer.tsx
+// ./src/components/Footer.tsx
 export default function Footer() {
   return (
     <div className="footer">
@@ -341,14 +184,25 @@ export default function Footer() {
 }
 ```
 
-![Footer-component](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8zabqwm50be5rkil00vd.png)
+Add the additional footer styles in style.css:
+
+```
+.footer {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.footer>a {
+    text-decoration: inherit;
+    color: #03c;
+}
+```
 
 ### Define the root app JSX, and clean up the rest of our HTML
 
-After moving everything in our HTML, make sure to leave a single div element
-where we can anchor our React app. At `./index.html`:
+After moving everything out of our HTML, make sure to leave a single div element where we can anchor our React app. At ./index.html:
 
-```html
+```
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -365,10 +219,10 @@ where we can anchor our React app. At `./index.html`:
 </html>
 ```
 
-In `src/App.tsx`, import both the components that we created in the previous
-section, and let’s add a footer below the LoginForm:
 
-```tsx
+In the root App.tsx, import both the components that we created in the previous section, and let’s add a footer below the :
+
+```
 // ./src/App.tsx
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
@@ -384,14 +238,139 @@ export default function App() {
 }
 ```
 
-Since React will throw a syntax error if we do not wrap our components in a
-single container, we’ll have to use a Fragment
-([which also comes with a shortcode syntax!](https://reactjs.org/docs/fragments.html#short-syntax))
-to encapsulate our compounded JSX.
+Since React will throw a syntax error if we do not wrap our components in a single container, we’ll have to use a Fragment ([which also comes with a shortcode syntax!](https://reactjs.org/docs/fragments.html#short-syntax)) to encapsulate our compounded JSX.
 
-We can quickly write a component test `./src/App.cy.tsx` :
+**Why Fragments, and not <div> ?**
 
-```tsx
+At scale, we want to reduce nesting of our React app to improve readability when inspecting or debugging our work. Adding an unnecessary <div> or <span> element to wrap our component in a single parent container introduces another extra node that will clutter the DOM tree, which may introduce unwanted side-effects, such as:
+
+- break specific layout (grid/flexbox) rules, requiring additional CSS properties to accommodate for the default block-behavior of a <div>
+- Demand more memory usage for adding another layer to nest our components
+
+In main.tsx, let’s import our App component, and define how our React app will be rendered inside our HTML:
+
+```
+// ./src/main.tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './styles.css'
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+When you view your local application in your browser, it should look like this:
+
+
+
+## Test
+
+If everything is correct so far, our e2e sanity test should work the same. Stop serving the app. Start the app and the e2e tests with yarn cy:open-e2e.
+
+Let us create Cypress component tests to cover our components in isolation.
+
+First, we will perform a one time import of our styles to cypress/support/component.tsx .
+
+```
+// ./cypress/support/component.tsx
+// put CT-only commands here
+
+import './commands'
+import '../../src/styles.css' // add this line
+
+import {mount} from 'cypress/react18'
+
+Cypress.Commands.add('mount', mount)
+```
+
+Create a file at ./src/components/LoginForm.cy.tsx. Mount the LoginForm component.
+
+```
+// ./src/components/LoginForm.cy.tsx
+import LoginForm from './LoginForm'
+
+describe('LoginForm', () => {
+  it('should render the elements', () => {
+    cy.mount(<LoginForm />)
+  })
+})
+```
+
+Stop the e2e runner if it is running, yarn cy:open-ct to start the component runner. Alternatively, you can use the top left icon to switch test types between Component and e2e on the fly. Execute the LoginForm component test. We see the component render in isolation, we can even ad-hoc test it.
+
+For now the component does not do much, so we can verify that the elements render. Since our app is small, there will be some overlap between component and e2e tests, but this is fine as it will let us practice component testing in a familiar way. At the end of the component tests, the only additional value the e2e test is providing will be sanity check that the app can be served.
+
+Can you create a component test similar to the e2e sanity test? The only difference should be cy.visit() vs cy.mount() because the rest of the Cypress API is the same.
+
+```
+// ./src/components/LoginForm.cy.tsx
+import LoginForm from './LoginForm'
+
+describe('LoginForm', () => {
+  it('should render the elements', () => {
+    cy.mount(<LoginForm />)
+
+    cy.get('#email').type('test@example.com')
+    cy.get('#password').type('123456')
+
+    cy.contains('#passwordToggle', 'Show').should('be.visible')
+    cy.contains('button', 'Log in').should('be.visible')
+  })
+})
+```
+
+
+
+In addition to the login form, let’s add a footer component in our components folder. Create a file src/components/Footer.cy.tsx and mount the component.
+
+```
+// src/components/Footer.cy.tsx
+import Footer from './Footer'
+
+describe('Footer', () => {
+  it('should render', () => {
+    cy.mount(<Footer />)
+  })
+})
+```
+
+Our component should render in isolation.
+
+Can you write a test that:
+
+- Verifies that Don't have an account yet? text exists under some element
+- Has an anchor under the said element, with an href attribute and a value of https://www.extend.com/contact
+- The anchor element has text Contact us
+
+```
+// src/components/Footer.cy.tsx
+import Footer from './Footer'
+
+describe('Footer', () => {
+  it('should render', () => {
+    cy.mount(<Footer />)
+
+    cy.get('.footer')
+      .contains("Don't have an account yet?")
+      .find('a')
+      .should('have.attr', 'href', 'https://www.extend.com/contact')
+      .contains('Contact us')
+  })
+})
+```
+
+
+
+We can write a final component test for the App component. Usually we do not need to, but it is a good showcase to see what to test where.
+
+We already tested Footer and LoginForm components in isolation. There is no need for test duplication. For App component, it would suffice to ensure that the children render. Create a file at ./src/App.cy.tsx.
+
+```
 // ./src/App.cy.tsx
 
 import App from './App'
@@ -403,14 +382,13 @@ describe('App', () => {
 })
 ```
 
-![App.cy.tsx](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3s8cer0umyfkgwlywmzc.png)
+We see that both the children render, but what is a good way to verify that? One best practice is to add a data-cy attribute to the top element of the component with the component name. We can then use the custom selector getByCy in the cypress/support/commands.ts file to ensure the child component is rendered.
 
-We see that both the children render, but what is a good way to verify that? One
-best practice is to add a `data-cy` attribute to the top element of the
-component with the component name. We can then use the custom selector `getByCy`
-in the `cypress/support/commands.ts` file to ensure the child component is rendered.
+Can you add the data-cy attributes to the top elements of Footer and LoginForm components?
 
-```tsx
+Can you add 2 checks to the App component test to verify the 2 children? (Hint: use cy.getByCy(...) )
+
+```
 // ./src/App.cy.tsx
 
 import App from './App'
@@ -425,9 +403,9 @@ describe('App', () => {
 })
 ```
 
-To make our tests pass, we will add the `data-cy` attributes to our components.
 
-```tsx
+
+```
 // ./src/components/Footer.tsx
 export default function Footer() {
   return (
@@ -439,13 +417,17 @@ export default function Footer() {
 }
 ```
 
-```tsx
+
+
+```
 // ./src/components/LoginForm.tsx
+
+import logo from '../assets/logo.svg'
 
 export default function LoginForm() {
   return (
     <form data-cy="LoginForm" className="login-form">
-      <img src="public/extend-logo.png" alt="Extend" />
+      <img src={logo} alt="Extend" />
 
       <div className="form-group">
         <label className="form-label" htmlFor="email">
@@ -477,62 +459,13 @@ export default function LoginForm() {
 }
 ```
 
-**Why Fragments, and not `<div>` ?**
 
-At scale, we want to reduce nesting of our React app to improve readability when
-inspecting or debugging our work. Adding an unnecessary <div> or <span> element
-to wrap our component in a single parent container introduces another extra node
-that will clutter the DOM tree, which may introduce unwanted side-effects, such
-as:
 
-- break specific layout (grid/flexbox) rules, requiring additional CSS
-  properties to accommodate for the default block-behavior of a <div>
-- Demand more memory usage for adding another layer to nest our components
+In order to demo our local utilities, we can quickly perform the local checks.
 
-in `./src/main.tsx`, we import our App component, and define how our React app
-will be rendered inside our HTML:
-
-```tsx
-// ./src/main.tsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
 ```
-
-The 3 components we tested in isolation are working great, but we should also
-verify that our app can get bundled and served. The only way to accomplish that
-is with an e2e test. For now, it would suffice if our e2e test replicated the
-component test for `App.cy.tsx`. Let's create a file
-`cypress/e2e/sanity-spec.cy.ts` , and instead of mounting a component we will
-visit the baseUrl.
-
-```ts
-// ./cypress/e2e/sanity-spec.cy.ts
-describe('e2e sanity', () => {
-  it('passes sanity', () => {
-    cy.visit('/')
-
-    cy.getByCy('LoginForm').should('be.visible')
-    cy.getByCy('Footer').should('be.visible')
-  })
-})
-```
-
-![e2e sanity](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/babplab2vw0b2anob9sb.png)
-
-For this time, in order to demo our local utilities, we can quickly perform the
-CI checks locally prior to pushing.
-
-```bash
-
-yarn validate # parallel typecheck, lint, format
+# parallel typecheck, lint, format
+yarn validate 
 
 # runs headless component tests w/o video & screenshots
 yarn cy:run-ct-fast
@@ -541,31 +474,15 @@ yarn cy:run-ct-fast
 yarn cy:run-e2e
 ```
 
-We will consider adding unit tests with Jest if we need them later. For now,
-since we deleted the `App.test.tsx` file, we do not have any tests in Jest,
-therefore we will need to replace our scripts at `package.json` file.
-
-```json
-"test": "echo add unit tests if needed",
-"test:coverage": "echo add unit tests if needed",
-```
-
-Push the PR, and wait about 2 - 3 minutes. A fully green CI indicates a passing lesson.
-
-![Actions](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/f2iyseftmmdz6s611xzt.png)
-
 ## Summary
 
-Congratulations! We’ve now written our very first components in React, Cypress
-component tests for each, and an e2e test. For the next assignment, we will be
-covering common techniques and patterns that we’ll encounter in production code.
+Congratulations! We’ve now written our very first snippet in React! For the next assignment, we’ll be covering common techniques and patterns that we’ll encounter in production code. 
 
 Your takeaways from this assignment should be:
 
-- Building HTML into valid React-JSX syntax
+- Building HTML into valid React-JSX syntax  
 - Exporting and importing React components
 - Embedding a React single-page application (SPA) into our HTML
-- TDD with Cypress component testing.
+- Cypress component testing
 
-Now that you’ve completed the theory and assignment, let’s move on to
-[Lesson 2: Components & Composition.]()
+Now that you’ve completed the theory and assignment, let’s move on to [Lesson 2: Components & Composition.]()
