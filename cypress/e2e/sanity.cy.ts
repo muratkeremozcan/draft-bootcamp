@@ -1,8 +1,6 @@
-import LoginForm from './LoginForm'
-
-describe('LoginForm', () => {
-  it('should render the elements', () => {
-    cy.mount(<LoginForm />)
+describe('sanity', () => {
+  it('should pass', () => {
+    cy.visit('/')
 
     cy.get('#email').type('test@example.com')
     cy.get('#password').type('123456')
