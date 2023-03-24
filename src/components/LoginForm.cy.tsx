@@ -4,6 +4,8 @@ describe('LoginForm', () => {
   it('should render the elements', () => {
     cy.mount(<LoginForm />)
 
+    cy.get('img').should('be.visible')
+
     cy.get('#email').type('test@example.com')
     cy.getByCy('PasswordInput').type('123456')
 

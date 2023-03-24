@@ -2,6 +2,7 @@ describe('sanity', () => {
   it('should pass', () => {
     cy.visit('/')
 
-    cy.get('img').should('be.visible')
+    cy.getByCy('LoginForm').should('be.visible')
+    cy.getByCy('Footer').should('be.visible')
   })
 })
