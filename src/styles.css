@@ -32,6 +32,13 @@ body {
   justify-content: space-between;
 }
 
+.password-form-input {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .form-label {
   display: block;
   color: #090637;

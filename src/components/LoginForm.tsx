@@ -1,35 +1,15 @@
-import logo from '../assets/logo.svg'
+import Logo from './Logo'
+import Input from './Input'
+import PasswordInput from './PasswordInput'
+import Button from './Button'
 
 export default function LoginForm() {
   return (
-    <form data-cy="LoginForm" className="login-form">
-      <img src={logo} alt="Extend" />
-
-      <div className="form-group">
-        <label className="form-label" htmlFor="email">
-          Email Address
-        </label>
-        <input className="form-input" type="text" name="email" id="email" />
-      </div>
-
-      <div className="form-group">
-        <label className="form-label" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="form-input"
-          type="password"
-          name="password"
-          id="password"
-        />
-        <button className="button" type="button" id="passwordToggle">
-          Show
-        </button>
-      </div>
-
-      <button className="button" type="submit">
-        Log in
-      </button>
+    <form className="login-form">
+      <Logo />
+      <Input id="email" label="Email Address" name="email" />
+      <PasswordInput id="passwordToggle" label="Password" />
+      <Button type="submit">Log in</Button>
     </form>
   )
 }
