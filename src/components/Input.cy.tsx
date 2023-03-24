@@ -1,7 +1,7 @@
 import Input from './Input'
 
 describe('Input', () => {
-  it('should display any label and input', () => {
+  it('should display the input', () => {
     const label = 'foo'
     cy.mount(<Input label={label} />)
 

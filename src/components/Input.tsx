@@ -6,7 +6,7 @@ export interface Props extends HTMLProps<HTMLInputElement> {
 
 export default function Input({label, id, ...restProps}: Props) {
   return (
-    <div className="form-group">
+    <div data-cy="Input" className="form-group">
       <label className="form-label" htmlFor={id}>
         {label}
       </label>
