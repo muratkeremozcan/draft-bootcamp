@@ -7,14 +7,14 @@ describe('PasswordInput', () => {
     cy.getByCy('Input').should('be.visible')
     cy.getByCy('Button').should('be.visible')
 
-    cy.get('.form-input')
+    cy.getByCy('form-input')
       .should('have.attr', 'type', 'password')
       .type('bar', {delay: 0})
 
     cy.getByCy('Button').contains('Show').click()
-    cy.get('.form-input').should('have.attr', 'type', 'text')
+    cy.getByCy('form-input').should('have.attr', 'type', 'text')
 
     cy.getByCy('Button').contains('Hide').click()
-    cy.get('.form-input').should('have.attr', 'type', 'password')
+    cy.getByCy('form-input').should('have.attr', 'type', 'password')
   })
 })
