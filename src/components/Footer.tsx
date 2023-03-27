@@ -1,8 +1,22 @@
+import styled from '@emotion/styled'
+
 export default function Footer() {
   return (
-    <div data-cy="Footer" className="footer">
+    <Wrapper data-cy="Footer">
       Don't have an account yet?&nbsp;
-      <a href="https://www.extend.com/contact">Contact us</a>
-    </div>
+      <ExternalLink href="https://www.extend.com/contact">
+        Contact us
+      </ExternalLink>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.footer({
+  marginTop: 16,
+  textAlign: 'center',
+})
+
+const ExternalLink = styled.a({
+  textDecoration: 'inherit',
+  color: '#03c',
+})

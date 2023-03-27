@@ -11,5 +11,5 @@ export default function Logo({
   width = DEFAULT_IMAGE_SIZE_PX,
   height = DEFAULT_IMAGE_SIZE_PX,
 }: Props) {
-  return <img src={LogoFile} width={width} height={height} />
+  return <img src={LogoFile} width={width} height={height} alt="Extend" />
 }

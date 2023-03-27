@@ -4,6 +4,7 @@ import Logo from './Logo'
 import Input from './Input'
 import PasswordInput from './PasswordInput'
 import Button from './Button'
+import styled from '@emotion/styled'
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('')
@@ -35,7 +36,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form data-cy="LoginForm" className="login-form" onSubmit={handleSubmit}>
+    <Form data-cy="LoginForm" onSubmit={handleSubmit}>
       <Logo />
       <Input
         id="email"
@@ -51,6 +52,16 @@ export default function LoginForm() {
         value={password}
       />
       <Button type="submit">Log in</Button>
-    </form>
+    </Form>
   )
 }
+
+const Form = styled.form({
+  backgroundColor: '#fff',
+  borderRadius: 12,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 32,
+  padding: 40,
+  width: 440,
+})
