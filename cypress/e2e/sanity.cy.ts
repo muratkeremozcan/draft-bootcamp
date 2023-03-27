@@ -1,8 +1,28 @@
 describe('sanity', () => {
-  it('should pass', () => {
-    cy.visit('/')
+  it('should visit login', () => {
+    cy.visit('/login')
 
     cy.getByCy('LoginForm').should('be.visible')
     cy.getByCy('Footer').should('be.visible')
+  })
+
+  it('should exercise routing for products', () => {
+    cy.visit('/products')
+
+    cy.getByCy('table-row').should('have.length.gt', 0).first().click()
+
+    cy.location('pathname')
+      .should('match', /\/products\/(\w+)/)
+      .then(productPath => {
+        const productId = productPath.split('/')[2]
+        cy.contains(productId)
+        cy.contains('Back to list').click()
+
+        cy.location('pathname').should('eq', '/products')
+
+        cy.log('**direct navigation**')
+        cy.visit(productPath)
+        cy.contains(productId)
+      })
   })
 })

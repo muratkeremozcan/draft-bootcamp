@@ -1,8 +1,8 @@
-import App from './App'
+import Login from './Login'
 
-describe('App', () => {
+describe('Login', () => {
   it('renders children', () => {
-    cy.mount(<App />)
+    cy.mount(<Login />)
 
     cy.getByCy('LoginForm').should('be.visible')
     cy.getByCy('Footer').should('be.visible')
