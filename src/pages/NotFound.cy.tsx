@@ -2,7 +2,7 @@ import NotFound from './NotFound'
 import {BrowserRouter} from 'react-router-dom'
 
 describe('NotFound', () => {
-  it('renders children', () => {
+  it('should render page text and link', () => {
     cy.mount(
       <BrowserRouter>
         <NotFound />

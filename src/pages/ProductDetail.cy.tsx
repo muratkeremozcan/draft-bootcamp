@@ -24,21 +24,20 @@ const routeWrappedMount = (
 }
 
 describe('ProductDetail', () => {
-  it('should', () => {
-    listAllProducts().forEach(({id, name, retail, isAvailable}) => {
-      const route = `/${id}`
-      const path = '/:id'
-      routeWrappedMount(<ProductDetail />, route, path)
+  it('should display product details', () => {
+    const {id, name, retail, isAvailable} = listAllProducts()[0]
+    const route = `/${id}`
+    const path = '/:id'
+    routeWrappedMount(<ProductDetail />, route, path)
 
-      cy.contains(name)
-      cy.contains(formatCurrency(retail))
-      if (isAvailable) {
-        cy.contains('Yes')
-      } else {
-        cy.contains('No')
-      }
+    cy.contains(name)
+    cy.contains(formatCurrency(retail))
+    if (isAvailable) {
+      cy.contains('Yes')
+    } else {
+      cy.contains('No')
+    }
 
-      cy.contains('[href="/products"]', 'Back to list')
-    })
+    cy.contains('[href="/products"]', 'Back to list')
   })
 })

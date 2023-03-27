@@ -4,7 +4,7 @@ import {listAllProducts} from '../mock-utils'
 import {formatCurrency} from '../utils/formatCurrency'
 
 describe('ProductList', () => {
-  it('should', () => {
+  it('should display each product with path', () => {
     cy.mount(
       <BrowserRouter>
         <ProductList />
