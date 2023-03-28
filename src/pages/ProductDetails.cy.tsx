@@ -1,4 +1,4 @@
-import ProductDetail from './ProductDetail'
+import ProductDetails from './ProductDetails'
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 import {listAllProducts} from '../mock-utils'
 import type {MountReturn} from 'cypress/react'
@@ -23,12 +23,12 @@ const routeWrappedMount = (
   return cy.mount(wrapped, options)
 }
 
-describe('ProductDetail', () => {
+describe('ProductDetails', () => {
   it('should display product details', () => {
     const {id, name, retail, isAvailable} = listAllProducts()[0]
     const route = `/${id}`
     const path = '/:id'
-    routeWrappedMount(<ProductDetail />, route, path)
+    routeWrappedMount(<ProductDetails />, route, path)
 
     cy.contains(name)
     cy.contains(formatCurrency(retail))

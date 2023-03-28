@@ -1,13 +1,13 @@
-import ProductList from './ProductList'
+import ProductsList from './ProductsList'
 import {BrowserRouter} from 'react-router-dom'
 import {listAllProducts} from '../mock-utils'
 import {formatCurrency} from '../utils/formatCurrency'
 
-describe('ProductList', () => {
+describe('ProductsList', () => {
   it('should display each product with path', () => {
     cy.mount(
       <BrowserRouter>
-        <ProductList />
+        <ProductsList />
       </BrowserRouter>,
     )
 

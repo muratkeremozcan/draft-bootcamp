@@ -5,8 +5,7 @@ import {formatCurrency} from '../utils/formatCurrency'
 
 export default function ProductDetails() {
   const {id} = useParams<{id: string}>()
-  const product = findProductById(id!)
-  console.log(product)
+  const product = findProductById(id as string)
 
   if (!product) return <Navigate to="/not-found" />
 

@@ -1,9 +1,9 @@
+import {Routes, Route, BrowserRouter} from 'react-router-dom'
 import {Global, css} from '@emotion/react'
 import Login from './pages/Login'
-import ProductDetails from './pages/ProductDetail'
-import ProductsList from './pages/ProductList'
+import ProductDetails from './pages/ProductDetails'
+import ProductsList from './pages/ProductsList'
 import NotFound from './pages/NotFound'
-import {Routes, Route, BrowserRouter} from 'react-router-dom'
 
 export default function App() {
   return (
