@@ -3,6 +3,7 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom'
 import type {MountReturn} from 'cypress/react'
 import {formatCurrency} from '../utils/formatCurrency'
 import products from '../../cypress/fixtures/products.json'
+const product = products[0]
 
 // https://github.com/muratkeremozcan/cypress-react-component-test-examples/blob/24f5d2e597ac9480c3ea5352c8126777dd6c7282/cypress/component/hooks/kyle-wds/react-router-useParams-component-test/react-router-test-useParams.cy.tsx#L18
 
@@ -25,7 +26,6 @@ const routeWrappedMount = (
 
 describe('ProductDetails', () => {
   it('should display product details', () => {
-    const product = products[0]
     const {id, name, retail, isAvailable} = product
     const route = `/${id}`
     const path = '/:id'
@@ -36,10 +36,11 @@ describe('ProductDetails', () => {
         pathname: `/api/v1/products/${id}`,
       },
       {body: product},
-    ).as('getProducts')
+    ).as('getProduct')
 
     routeWrappedMount(<ProductDetails />, route, path)
     cy.getByCy('Spinner').should('be.visible')
+    cy.wait('@getProduct')
 
     cy.contains(name)
     cy.contains(formatCurrency(retail))

@@ -5,13 +5,13 @@ import {formatCurrency} from '../utils/formatCurrency'
 
 describe('ProductsList', () => {
   it('should display each product with path', () => {
-    cy.intercept(
-      {
-        method: 'GET',
-        pathname: '/api/v1/products',
-      },
-      {fixture: 'products.json'},
-    ).as('getProducts')
+    // cy.intercept(
+    //   {
+    //     method: 'GET',
+    //     pathname: '/api/v1/products',
+    //   },
+    //   {fixture: 'products.json'},
+    // ).as('getProducts')
 
     cy.mount(
       <BrowserRouter>

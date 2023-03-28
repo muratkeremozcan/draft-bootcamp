@@ -1,7 +1,7 @@
 import spok from 'cy-spok'
 import type {Product} from '../../src/types'
 
-describe('backend', () => {
+describe('backend vs ui', () => {
   beforeEach(() => {
     cy.intercept({
       method: 'GET',
