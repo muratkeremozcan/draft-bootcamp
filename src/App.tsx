@@ -1,6 +1,9 @@
-import LoginForm from './components/LoginForm'
-import Footer from './components/Footer'
+import {Routes, Route, BrowserRouter} from 'react-router-dom'
 import {Global, css} from '@emotion/react'
+import Login from './pages/Login'
+import ProductDetails from './pages/ProductDetails'
+import ProductsList from './pages/ProductsList'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -22,8 +25,14 @@ export default function App() {
           }
         `}
       />
-      <LoginForm />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/products" element={<ProductsList />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
