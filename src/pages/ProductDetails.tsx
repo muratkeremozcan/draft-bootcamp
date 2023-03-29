@@ -1,26 +1,14 @@
-import {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 import {useParams, Link, Navigate} from 'react-router-dom'
 import {formatCurrency} from '../utils/formatCurrency'
 import Spinner from '../components/Spinner'
-import type {Product} from '../types'
+import {useGetProductByIdQuery} from '../redux/services/products'
 
 export default function ProductDetails() {
   const {id} = useParams<{id: string}>()
-  const [product, setProduct] = useState<Product | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const {data: product, isFetching} = useGetProductByIdQuery(id as string)
 
-  useEffect(() => {
-    setTimeout(() => {
-      fetch(`https://64074f8d77c1a905a0f504d3.mockapi.io/api/v1/products/${id}`)
-        .then(response => response.json())
-        .then(data => setProduct(data))
-        .catch(error => console.error(error))
-        .finally(() => setLoading(false))
-    }, 500)
-  }, [])
-
-  if (loading) return <Spinner />
+  if (isFetching) return <Spinner />
 
   if (!product) return <Navigate to="/not-found" />
 
