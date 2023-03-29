@@ -12,7 +12,7 @@ export default function LoginForm() {
   }
 
   const validationSchema = yup.object().shape({
-    email: yup.string().required().email(),
+    email: yup.string().required(),
     password: yup.string().required(),
   })
 
@@ -26,9 +26,12 @@ export default function LoginForm() {
       validationSchema={validationSchema}
     >
       {({errors}) => {
-        const hasFormErrors = Boolean(Object.values(errors).length)
+        const hasEmailErrors = Boolean(errors.email)
+        const hasPasswordErrors = Boolean(errors.password)
+        const hasFormErrors = hasEmailErrors || hasPasswordErrors
+
         return (
-          <FormWrapper data-cy="LoginForm">
+          <FormWrapper>
             <Logo />
             <Input id="email" label="Email Address" name="email" />
             <PasswordInput
@@ -36,10 +39,9 @@ export default function LoginForm() {
               label="Password"
               name="password"
             />
-            {hasFormErrors && (
-              <ErrorMessage>
-                Fill out all required fields to continue.
-              </ErrorMessage>
+            {hasEmailErrors && <ErrorMessage>{errors.email}</ErrorMessage>}
+            {hasPasswordErrors && (
+              <ErrorMessage>{errors.password}</ErrorMessage>
             )}
             <Button type="submit" disabled={hasFormErrors}>
               Log in
