@@ -1,11 +1,27 @@
+import {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 import {useNavigate} from 'react-router-dom'
-import {listAllProducts} from '../mock-utils'
 import {formatCurrency} from '../utils/formatCurrency'
+import Spinner from '../components/Spinner'
+import type {Product} from '../types'
 
 export default function ProductsList() {
   const navigate = useNavigate()
   const handleClickTableRow = (id: string) => navigate(`/products/${id}`)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch('https://64074f8d77c1a905a0f504d3.mockapi.io/api/v1/products')
+        .then(response => response.json())
+        .then(data => setProducts(data))
+        .catch(error => console.error(error))
+        .finally(() => setLoading(false))
+    }, 500)
+  }, [])
+
+  if (loading) return <Spinner />
 
   return (
     <Wrapper>
@@ -20,7 +36,7 @@ export default function ProductsList() {
           </TableRow>
         </thead>
         <tbody>
-          {listAllProducts().map(product => (
+          {products.map(product => (
             <TableRow
               key={product.id}
               onClick={() => handleClickTableRow(product.id)}

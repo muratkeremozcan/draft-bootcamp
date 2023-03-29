@@ -1,3 +1,6 @@
+import products from '../../cypress/fixtures/products.json'
+const product = products[0]
+
 describe('Routing', () => {
   it('should visit unknown routes', () => {
     cy.visit('/')
@@ -15,9 +18,26 @@ describe('Routing', () => {
   })
 
   it('should visit product and product detail', () => {
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: '/api/v1/products',
+      },
+      {fixture: 'products.json'},
+    ).as('getProducts')
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: '/api/v1/products/*',
+      },
+      {body: product},
+    ).as('getProduct')
+
     cy.visit('/products')
+    cy.wait('@getProducts')
 
     cy.getByCy('table-row').should('have.length.gt', 0).first().click()
+    cy.wait('@getProduct')
 
     cy.location('pathname')
       .should('match', /\/products\/(\w+)/)
