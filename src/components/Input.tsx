@@ -15,7 +15,7 @@ export default function Input({label, id, ...restProps}: Props) {
     <Formik initialValues={{id: ''}} onSubmit={() => {}}>
       <FormGroup data-cy="Input">
         <Label htmlFor={id}>{label}</Label>
-        <FormInput name="val" id={id} data-cy="form-input" {...restProps} />
+        <FormInput name="id" id={id} data-cy="form-input" {...restProps} />
       </FormGroup>
     </Formik>
   )
