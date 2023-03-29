@@ -23,5 +23,6 @@ describe('LoginForm', {viewportWidth: 600, viewportHeight: 600}, () => {
     cy.log('**both filled**')
     cy.getByCy('PasswordInput').type('123456')
     cy.contains('button', 'Log in').should('be.enabled').click()
+    cy.get('@alert').should('have.been.calledWith', 'submitting')
   })
 })

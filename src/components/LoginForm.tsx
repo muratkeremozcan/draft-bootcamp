@@ -12,44 +12,42 @@ export default function LoginForm() {
     password: yup.string().required(),
   })
 
-  const formik = useFormik({
+  const {values, errors, handleSubmit, handleChange, handleBlur} = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: values => {
+    onSubmit: () => {
       alert('submitting')
     },
     validationSchema: validationSchema,
   })
 
-  const hasEmailErrors = Boolean(formik.errors.email)
-  const hasPasswordErrors = Boolean(formik.errors.password)
+  const hasEmailErrors = Boolean(errors.email)
+  const hasPasswordErrors = Boolean(errors.password)
   const hasFormErrors = hasEmailErrors || hasPasswordErrors
 
   return (
-    <FormWrapper onSubmit={formik.handleSubmit}>
+    <FormWrapper onSubmit={handleSubmit}>
       <Logo />
       <Input
         id="email"
         label="Email Address"
         name="email"
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        value={values.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
       />
-      {hasEmailErrors && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
+      {hasEmailErrors && <ErrorMessage>{errors.email}</ErrorMessage>}
       <PasswordInput
         id="passwordToggle"
         label="Password"
         name="password"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        value={values.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
       />
-      {hasPasswordErrors && (
-        <ErrorMessage>{formik.errors.password}</ErrorMessage>
-      )}
+      {hasPasswordErrors && <ErrorMessage>{errors.password}</ErrorMessage>}
       <Button type="submit" disabled={hasFormErrors}>
         Log in
       </Button>
