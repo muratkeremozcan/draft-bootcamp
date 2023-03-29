@@ -28,7 +28,7 @@ export default function LoginForm() {
   const hasFormErrors = hasEmailErrors || hasPasswordErrors
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper data-cy="LoginForm" onSubmit={handleSubmit}>
       <Logo />
       <Input
         id="email"
