@@ -40,6 +40,30 @@ declare global {
         component: React.ReactNode,
         options?: MountOptions,
       ): Cypress.Chainable<MountReturn>
+
+      /** Mounts a React node wrapped with a store
+       * @param component React Node to mount
+       * @param customStore Custom store to pass into mount
+       * @param options Additional options to pass into mount
+       */
+      storeWrappedMount(
+        component: React.ReactNode,
+        customStore?: any,
+        options?: MountOptions,
+      ): Cypress.Chainable<MountReturn>
+
+      /** Mounts a React node wrapped with a store and Routes, for cases with react-router hooks such as `useParams`
+       * @param component React Node to mount
+       * @param customStore Custom store to pass into mount
+       * @param options Additional options to pass into mount
+       */
+      routeWrappedMount(
+        component: React.ReactNode,
+        route: string,
+        path: string,
+        customStore?: any,
+        options?: MountOptions,
+      ): Cypress.Chainable<MountReturn>
     }
   }
 }

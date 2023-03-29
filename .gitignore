@@ -37,3 +37,4 @@ ignored/
 .eslintcache
 combined-coverage
 .nyc_output
+cypress/support/component.tsx

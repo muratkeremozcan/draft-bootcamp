@@ -1,5 +1,4 @@
 import ProductsList from './ProductsList'
-import {BrowserRouter} from 'react-router-dom'
 import products from '../../cypress/fixtures/products.json'
 import {formatCurrency} from '../utils/formatCurrency'
 
@@ -10,14 +9,10 @@ describe('ProductsList', () => {
         method: 'GET',
         pathname: '/api/v1/products',
       },
-      {fixture: 'products.json'},
+      {fixture: 'products.json', delay: 100},
     ).as('getProducts')
 
-    cy.mount(
-      <BrowserRouter>
-        <ProductsList />
-      </BrowserRouter>,
-    )
+    cy.storeWrappedMount(<ProductsList />)
     cy.getByCy('Spinner').should('be.visible')
 
     cy.getByCy('table-row').should('have.length', products.length)
