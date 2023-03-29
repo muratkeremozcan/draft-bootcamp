@@ -3,57 +3,61 @@ import Input from './Input'
 import PasswordInput from './PasswordInput'
 import Button from './Button'
 import styled from '@emotion/styled'
-import {Formik, Form} from 'formik'
+import {useFormik} from 'formik'
 import * as yup from 'yup'
 
 export default function LoginForm() {
-  const handleSubmit = (values: {email: string; password: string}): void => {
-    alert('submitting')
-  }
-
   const validationSchema = yup.object().shape({
-    email: yup.string().required(),
+    email: yup.string().required().email(),
     password: yup.string().required(),
   })
 
-  return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
-      {({errors}) => {
-        const hasEmailErrors = Boolean(errors.email)
-        const hasPasswordErrors = Boolean(errors.password)
-        const hasFormErrors = hasEmailErrors || hasPasswordErrors
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: values => {
+      alert('submitting')
+    },
+    validationSchema: validationSchema,
+  })
 
-        return (
-          <FormWrapper>
-            <Logo />
-            <Input id="email" label="Email Address" name="email" />
-            <PasswordInput
-              id="passwordToggle"
-              label="Password"
-              name="password"
-            />
-            {hasEmailErrors && <ErrorMessage>{errors.email}</ErrorMessage>}
-            {hasPasswordErrors && (
-              <ErrorMessage>{errors.password}</ErrorMessage>
-            )}
-            <Button type="submit" disabled={hasFormErrors}>
-              Log in
-            </Button>
-          </FormWrapper>
-        )
-      }}
-    </Formik>
+  const hasEmailErrors = Boolean(formik.errors.email)
+  const hasPasswordErrors = Boolean(formik.errors.password)
+  const hasFormErrors = hasEmailErrors || hasPasswordErrors
+
+  return (
+    <FormWrapper onSubmit={formik.handleSubmit}>
+      <Logo />
+      <Input
+        id="email"
+        label="Email Address"
+        name="email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      {hasEmailErrors && <ErrorMessage>{formik.errors.email}</ErrorMessage>}
+      <PasswordInput
+        id="passwordToggle"
+        label="Password"
+        name="password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      {hasPasswordErrors && (
+        <ErrorMessage>{formik.errors.password}</ErrorMessage>
+      )}
+      <Button type="submit" disabled={hasFormErrors}>
+        Log in
+      </Button>
+    </FormWrapper>
   )
 }
 
-const FormWrapper = styled(Form)({
+const FormWrapper = styled.form({
   backgroundColor: '#fff',
   borderRadius: 12,
   display: 'flex',

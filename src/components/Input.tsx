@@ -1,27 +1,35 @@
 import styled from '@emotion/styled'
-import {Formik, Field} from 'formik'
+import {useFormik} from 'formik'
 
 export interface Props {
   label: string
-  id?: string
-
-  name?: string
-  type?: string
+  id: string
 }
 
 export default function Input({label, id, ...restProps}: Props) {
-  return (
+  const formik = useFormik({
+    initialValues: {[id || '']: ''},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    <Formik initialValues={{id: ''}} onSubmit={() => {}}>
-      <FormGroup data-cy="Input">
-        <Label htmlFor={id}>{label}</Label>
-        <FormInput name="id" id={id} data-cy="form-input" {...restProps} />
-      </FormGroup>
-    </Formik>
+    onSubmit: () => {},
+  })
+
+  return (
+    <FormGroup data-cy="Input">
+      <Label htmlFor={id}>{label}</Label>
+      <FormInput
+        name={id}
+        id={id}
+        data-cy="form-input"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values[id || '']}
+        {...restProps}
+      />
+    </FormGroup>
   )
 }
 
-const FormInput = styled(Field)({
+const FormInput = styled.input({
   border: '1px solid #515963',
   borderRadius: '4px',
   fontFamily: '"Nunito Sans", sans-serif',
