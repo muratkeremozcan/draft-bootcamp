@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import {useFormik, FormikHandlers} from 'formik'
-import type {ChangeEvent} from 'react'
+import {useFormik} from 'formik'
+import type {FormEvent, FocusEvent} from 'react'
 
 export type Props = {
   label: string
@@ -8,31 +8,16 @@ export type Props = {
   value?: string
   name?: 'email' | 'password'
   type?: 'text' | 'password'
-  onChange?: FormikHandlers['handleChange']
-  onBlur?: FormikHandlers['handleBlur']
+  onChange?: (e: FormEvent) => void
+  onBlur?: (e: FocusEvent) => void
 }
 
 export default function Input({label, id, ...restProps}: Props) {
-  const {setFieldValue, setFieldTouched, values} = useFormik({
+  const {handleChange, handleBlur, values} = useFormik({
     initialValues: {id: ''},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSubmit: () => {},
   })
-
-  const handleChange: FormikHandlers['handleChange'] = (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
-    const {value} = e.target
-    setFieldValue(id, value)
-  }
-
-  const handleBlur: FormikHandlers['handleBlur'] = (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
-    const {value} = e.target
-    setFieldTouched(id, true)
-    setFieldValue(id, value)
-  }
 
   return (
     <FormGroup data-cy="Input">
