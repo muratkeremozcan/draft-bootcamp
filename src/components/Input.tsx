@@ -1,9 +1,14 @@
 import styled from '@emotion/styled'
-import {useFormik} from 'formik'
+import {useFormik, FormikHandlers} from 'formik'
 
-export interface Props {
+export type Props = {
   label: string
   id: string
+  value?: string
+  name?: 'email' | 'password'
+  type?: 'text' | 'password'
+  onChange?: FormikHandlers['handleChange']
+  onBlur?: FormikHandlers['handleBlur']
 }
 
 export default function Input({label, id, ...restProps}: Props) {
@@ -13,6 +18,21 @@ export default function Input({label, id, ...restProps}: Props) {
     onSubmit: () => {},
   })
 
+  const handleChange: FormikHandlers['handleChange'] = (e: {
+    target: {value: string}
+  }) => {
+    const {value} = e.target
+    formik.setFieldValue(id, value)
+  }
+
+  const handleBlur: FormikHandlers['handleBlur'] = (e: {
+    target: {value: string}
+  }) => {
+    const {value} = e.target
+    formik.setFieldTouched(id, true)
+    formik.setFieldValue(id, value)
+  }
+
   return (
     <FormGroup data-cy="Input">
       <Label htmlFor={id}>{label}</Label>
@@ -20,8 +40,8 @@ export default function Input({label, id, ...restProps}: Props) {
         name={id}
         id={id}
         data-cy="form-input"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        onChange={handleChange}
+        onBlur={handleBlur}
         value={formik.values[id || '']}
         {...restProps}
       />
