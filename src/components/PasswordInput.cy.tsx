@@ -2,7 +2,7 @@ import PasswordInput from './PasswordInput'
 
 describe('PasswordInput', () => {
   it('should render children: Input and Button', () => {
-    cy.mount(<PasswordInput label="foo" />)
+    cy.mount(<PasswordInput label="foo" id={'id'} />)
 
     cy.getByCy('Input').should('be.visible')
     cy.getByCy('Button').should('be.visible')
