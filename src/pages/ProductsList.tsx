@@ -1,17 +1,25 @@
 import styled from '@emotion/styled'
-import {useNavigate} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {formatCurrency} from '../utils/formatCurrency'
 import Spinner from '../components/Spinner'
 import {useGetProductsQuery} from '../redux/services/products'
 
 export default function ProductsList() {
-  const navigate = useNavigate()
-  const handleClickTableRow = (id: string) => navigate(`/products/${id}`)
-  const {data: products, isFetching} = useGetProductsQuery()
+  const history = useHistory()
 
-  if (isFetching) return <Spinner />
+  const handleClickTableRow = (id: string): void => {
+    history.push(`/products/${id}`)
+  }
 
-  if (!products) return null
+  const {data, isFetching} = useGetProductsQuery({})
+
+  if (isFetching) {
+    return <Spinner />
+  }
+
+  if (!data) {
+    return null
+  }
 
   return (
     <Wrapper>
@@ -26,18 +34,21 @@ export default function ProductsList() {
           </TableRow>
         </thead>
         <tbody>
-          {products.map(product => (
-            <TableRow
-              key={product.id}
-              onClick={() => handleClickTableRow(product.id)}
-              data-cy="table-row"
-            >
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.company}</TableCell>
-              <TableCell>{formatCurrency(product.retail)}</TableCell>
-              <TableCell>{product.isAvailable ? 'Yes' : 'Sold out!'}</TableCell>
-            </TableRow>
-          ))}
+          {data.map(product => {
+            return (
+              <TableRow
+                key={product.id}
+                onClick={() => handleClickTableRow(product.id)}
+              >
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.company}</TableCell>
+                <TableCell>{formatCurrency(product.retail)}</TableCell>
+                <TableCell>
+                  {product.isAvailable ? 'Yes' : 'Sold out!'}
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </tbody>
       </Table>
     </Wrapper>
