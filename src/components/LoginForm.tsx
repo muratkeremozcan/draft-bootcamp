@@ -28,7 +28,7 @@ export default function LoginForm() {
   const hasFormErrors = hasEmailErrors || hasPasswordErrors
 
   return (
-    <FormWrapper data-cy="LoginForm" onSubmit={handleSubmit}>
+    <Form data-cy="LoginForm" onSubmit={handleSubmit}>
       <Logo />
       <Input
         id="email"
@@ -51,11 +51,11 @@ export default function LoginForm() {
       <Button type="submit" disabled={hasFormErrors}>
         Log in
       </Button>
-    </FormWrapper>
+    </Form>
   )
 }
 
-const FormWrapper = styled.form({
+const Form = styled.form({
   backgroundColor: '#fff',
   borderRadius: 12,
   display: 'flex',

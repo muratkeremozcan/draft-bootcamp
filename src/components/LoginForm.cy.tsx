@@ -1,7 +1,7 @@
 import LoginForm from './LoginForm'
 
 describe('LoginForm', {viewportWidth: 600, viewportHeight: 600}, () => {
-  it('should render the elements', () => {
+  it('should verify password and both field cases', () => {
     cy.mount(<LoginForm />)
 
     cy.get('img').should('be.visible')
@@ -24,5 +24,21 @@ describe('LoginForm', {viewportWidth: 600, viewportHeight: 600}, () => {
     cy.getByCy('PasswordInput').type('123456')
     cy.contains('button', 'Log in').should('be.enabled').click()
     cy.get('@alert').should('have.been.calledWith', 'submitting')
+  })
+
+  it('should verify email', () => {
+    cy.mount(<LoginForm />)
+
+    cy.log('**email empty**')
+    cy.contains('email is a required field').should('not.exist')
+
+    cy.getByCy('PasswordInput').type('123456')
+    cy.contains('email is a required field')
+
+    cy.log('**email must be valid**')
+    cy.get('#email').type('a')
+    cy.contains('email must be a valid email')
+    cy.get('#email').type('test@example.com')
+    cy.contains('email must be a valid email').should('not.exist')
   })
 })
