@@ -31,7 +31,7 @@ const routeWrappedMount = (
 ) => {
   window.history.pushState({}, '', route)
   const wrapped = (
-    <Provider store={store}>
+    <Provider store={customStore}>
       <MemoryRouter initialEntries={[route]}>
         <Routes>
           <Route element={WrappedComponent} path={path} />
