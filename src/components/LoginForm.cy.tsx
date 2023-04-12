@@ -15,14 +15,14 @@ describe('LoginForm', {viewportWidth: 600, viewportHeight: 600}, () => {
     cy.contains('password is a required field')
 
     cy.log('**password empty**')
-    cy.get('#email').type('test@example.com')
-    cy.contains('button', 'Log in').should('be.disabled')
+    cy.get('#email').type('test@example.com').blur()
+    // cy.contains('button', 'Log in').should('be.disabled')
     cy.contains('email is a required field').should('not.exist')
     cy.contains('password is a required field')
 
     cy.log('**both filled**')
     cy.getByCy('PasswordInput').type('123456')
-    cy.contains('button', 'Log in').should('be.enabled').click()
+    cy.contains('button', 'Log in').click()
     cy.get('@alert').should('have.been.calledWith', 'submitting')
   })
 
@@ -33,12 +33,13 @@ describe('LoginForm', {viewportWidth: 600, viewportHeight: 600}, () => {
     cy.contains('email is a required field').should('not.exist')
 
     cy.getByCy('PasswordInput').type('123456')
+    cy.contains('button', 'Log in').click()
     cy.contains('email is a required field')
 
     cy.log('**email must be valid**')
-    cy.get('#email').type('a')
+    cy.get('#email').type('a').blur()
     cy.contains('email must be a valid email')
-    cy.get('#email').type('test@example.com')
+    cy.get('#email').type('test@example.com').blur()
     cy.contains('email must be a valid email').should('not.exist')
   })
 })

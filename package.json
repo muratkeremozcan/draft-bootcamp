@@ -20,8 +20,8 @@
     "cy:run-ct-fast": "yarn cy:run-ct --config video=false screenshot=false"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.9.0",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@cypress/grep": "3.1.4",
-    "@reduxjs/toolkit": "^1.9.3",
+    "@reduxjs/toolkit": "1.9.3",
     "@testing-library/cypress": "9.0.0",
     "@testing-library/dom": "9.0.0",
     "@testing-library/jest-dom": "5.16.5",
@@ -60,7 +60,7 @@
     "lint-staged": "13.1.2",
     "npm-run-all": "4.1.5",
     "prettier": "2.8.4",
-    "react-redux": "^8.0.5",
+    "react-redux": "8.0.5",
     "start-server-and-test": "1.15.4",
     "ts-jest": "27.0.7",
     "ts-node": "10.4.0",
